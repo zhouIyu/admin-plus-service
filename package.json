@@ -1,0 +1,73 @@
+{
+	"name": "koa-template",
+	"version": "0.1.0",
+	"description": "以Koa为基础打造Node的模板",
+	"main": "index.js",
+	"scripts": {
+		"start": "NODE_ENV=development nodemon src/app.js",
+		"lint": "eslint --fix",
+		"commit": "git-cz",
+		"changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+		"release": "standard-version",
+		"push": "node ./scripts/publish.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/zhouIyu/koa-template.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/zhouIyu/koa-template/issues"
+	},
+	"homepage": "https://github.com/zhouIyu/koa-template#readme",
+	"dependencies": {
+		"@koa/cors": "^3.1.0",
+		"@koa/router": "^10.0.0",
+		"config": "^3.3.2",
+		"glob": "^7.1.6",
+		"joi": "^17.3.0",
+		"jsonwebtoken": "^8.5.1",
+		"koa": "^2.13.0",
+		"koa-body": "^4.2.0",
+		"log4js": "^6.3.0",
+		"mongoose": "^5.10.15"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^11.0.0",
+		"@commitlint/config-conventional": "^11.0.0",
+		"commitizen": "^4.2.2",
+		"conventional-changelog": "^3.1.24",
+		"conventional-changelog-cli": "^2.1.1",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^7.13.0",
+		"eslint-config-standard": "^16.0.1",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"husky": "^4.3.0",
+		"inquirer": "^7.3.3",
+		"lint-staged": "^10.5.1",
+		"nodemon": "^2.0.6",
+		"shelljs": "^0.8.4",
+		"standard-version": "^9.0.0"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{js,ts}": [
+			"eslint --fix",
+			"git add "
+		]
+	}
+}
