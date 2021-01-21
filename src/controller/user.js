@@ -19,7 +19,7 @@ class UserController {
         const user = await UserModel.findOne(body);
 
         if (!user) {
-            return ctx.error({}, '用户名或者密码错误');
+            return ctx.error(resConfig.Parameter_Error, '用户名或者密码错误');
         }
         const token = JWT.setToken(UserController.handleUserInfo(user));
         ctx.success({ token }, '登录成功');

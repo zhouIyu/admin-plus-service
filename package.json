@@ -1,5 +1,5 @@
 {
-	"name": "koa-template",
+	"name": "admin-plus-service",
 	"version": "0.1.0",
 	"description": "以Koa为基础打造Node的模板",
 	"main": "index.js",
@@ -11,17 +11,9 @@
 		"release": "standard-version",
 		"push": "node ./scripts/publish.js"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/zhouIyu/koa-template.git"
-	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/zhouIyu/koa-template/issues"
-	},
-	"homepage": "https://github.com/zhouIyu/koa-template#readme",
 	"dependencies": {
 		"@koa/cors": "^3.1.0",
 		"@koa/router": "^10.0.0",

@@ -2,10 +2,10 @@ module.exports = {
     mode: 'development',
     port: 3001,
     db: {
-        uri: 'mongodb://127.0.0.1:27017/test_koa'
+        uri: 'mongodb://test:test@127.0.0.1:27017/app_admin'
     },
     jwt: {
-        secret: 'XuRrpn1cEDQMKemOUSYLWsYRTEhW9qWH',
+        secret: 'KC31zpryumnfL4hSNtxIAPPz0IpBSPIY',
         expiresIn: '2h',
         whiteList: [
             '/user/register',

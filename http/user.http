@@ -1,0 +1,10 @@
+POST {{url}}/user/login
+Content-Type: application/json
+
+{
+    "username": "zhouzhuang",
+    "password": "123456"
+}
+
+###
+
