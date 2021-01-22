@@ -2,17 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    username: {
+    name: {
         type: String,
-        required: [true, 'username 不能为空']
-    },
-    password: {
-        type: String,
-        required: [true, 'password 不能为空']
-    },
-    email: {
-        type: String,
-        required: [true, 'email 不能为空']
+        required: true
     },
     valid: {
         type: Number,
@@ -29,6 +21,5 @@ const schema = new Schema({
     }
 });
 
-const model = mongoose.model('user', schema);
-
+const model = mongoose.model('role', schema);
 module.exports = model;

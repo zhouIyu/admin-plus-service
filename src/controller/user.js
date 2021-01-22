@@ -7,7 +7,7 @@ class UserController {
         const body = ctx.request.body;
         const user = await UserModel.findOne(body);
         if (user) {
-            return ctx.error(resConfig.Exist_User, '用户已存在');
+            return ctx.error(resConfig.Exist_Data, '用户已存在');
         }
         const newUser = new UserModel(body);
         await newUser.save();

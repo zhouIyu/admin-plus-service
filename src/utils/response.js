@@ -1,6 +1,6 @@
 const config = {
     Success: 0, // 成功
-    Exist_User: 2, // 用户已存在
+    Exist_Data: 2, // 已存在该数据
     Parameter_Error: 3, // 参数错误
     No_Auth: 4, // 无权限
     Server_Error: 5 // 服务器错误

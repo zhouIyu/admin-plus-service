@@ -2,7 +2,10 @@ const Router = require('@koa/router');
 const router = new Router();
 const User = require('../controller/user');
 const validator = require('../middlewares/validator');
-const { register, login } = require('../schema/user');
+const {
+    register,
+    login
+} = require('../schema/user');
 
 router.prefix('/user');
 
