@@ -2,6 +2,19 @@ const UserModel = require('../model/user');
 const { resConfig } = require('../utils/response');
 const JWT = require('../utils/jwt');
 
+const validateExitUser = async (ctx, id) => {
+    if (!id) {
+        return ctx.error(resConfig.Parameter_Error, 'user_id is undefined');
+    }
+    const user = await UserModel.findOneInfo({
+        _id: id
+    });
+    if (!user) {
+        return ctx.error(resConfig.NO_Exist, '该用户不存在');
+    }
+    return user;
+};
+
 class UserController {
     static async register (ctx) {
         const body = ctx.request.body;
@@ -32,15 +45,7 @@ class UserController {
 
     static async getUserInfoById (ctx) {
         const { user_id: id } = ctx.request.params;
-        if (!id) {
-            return ctx.error(resConfig.Parameter_Error, 'user_id is undefined');
-        }
-        const user = await UserModel.findOneInfo({
-            _id: id
-        });
-        if (!user) {
-            return ctx.error(resConfig.NO_Exist, '该用户不存在');
-        }
+        const user = await validateExitUser(ctx, id);
         ctx.success(user);
     }
 
@@ -71,16 +76,10 @@ class UserController {
             params,
             body
         } = ctx.request;
-        if (!params.user_id) {
-            return ctx.error(resConfig.Parameter_Error, 'user_id is undefined');
-        }
         const $cont = {
             _id: params.user_id
         };
-        const user = await UserModel.findOneInfo($cont);
-        if (!user) {
-            return ctx.error(resConfig.NO_Exist, '该用户不存在');
-        }
+        await validateExitUser(ctx, params.user_id);
         await UserModel.updateUser($cont, body);
         ctx.success({}, '更新成功');
     }

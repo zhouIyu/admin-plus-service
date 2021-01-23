@@ -53,7 +53,7 @@ const findOne = function (model, condition = {}, views = {}) {
         __v: 0
     };
     views = Object.assign(views, defaultViews);
-    return new Promise((resolve, reject) => {
+    return new Promise(function (resolve, reject) {
         model.findOne(condition, views).lean().exec(function (err, doc) {
             if (err) {
                 reject(err);

@@ -15,10 +15,10 @@ const schema = new Schema({
         type: String,
         required: [true, 'password 不能为空']
     },
-    role_id: {
-        type: Schema.Types.ObjectId,
-        ref: 'Role',
-        required: [true, 'role 不能为空']
+    role: {
+        type: Schema.Types.ObjectID,
+        ref: 'role',
+        required: [true, 'role 不能为']
     },
     valid: {
         type: Number,
@@ -35,7 +35,29 @@ const schema = new Schema({
     }
 });
 
-schema.statics.findOneInfo = function (condition) {
+schema.pre('findOne', function (done) {
+    this.populate({
+        path: 'role',
+        select: {
+            name: 1,
+            description: 1
+        }
+    });
+    done();
+});
+
+schema.pre('find', function (done) {
+    this.populate({
+        path: 'role',
+        select: {
+            name: 1,
+            description: 1
+        }
+    });
+    done();
+});
+
+schema.statics.findOneInfo = async function (condition) {
     const model = this;
     const views = {
         __v: 0,

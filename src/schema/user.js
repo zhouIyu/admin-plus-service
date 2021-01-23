@@ -7,7 +7,7 @@ const user = {
 };
 
 const register = {
-    role_id: Joi.string().required().error(new Error('role_id不能为空')),
+    role: Joi.string().required().error(new Error('role不能为空')),
     ...user
 };
 
