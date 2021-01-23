@@ -1,3 +1,27 @@
+PUT {{url}}/user/600b84e2ff608c4fd20c67bd
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "role_id": "600b87b61dd7d3508877b71a"
+}
+
+###
+GET {{url}}/user/600b84e2ff608c4fd20c67bd/info
+Accept: application/json
+Authorization: {{token}}
+
+###
+GET {{url}}/user/mine
+Accept: application/json
+Authorization: {{token}}
+
+###
+GET {{url}}/user/list?offset=0&limit=10
+Accept: application/json
+Authorization: {{token}}
+
+###
 POST {{url}}/user/login
 Content-Type: application/json
 
@@ -12,7 +36,8 @@ POST {{url}}/user/create
 Content-Type: application/json
 
 {
-    "username": "admin",
-    "password": "123456"
+    "username": "edit",
+    "password": "123456",
+    "role_id": "600b999a7ecd7c546ac957eb"
 }
 

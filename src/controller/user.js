@@ -29,6 +29,61 @@ class UserController {
         const user = ctx.user;
         ctx.success(user);
     }
+
+    static async getUserInfoById (ctx) {
+        const { user_id: id } = ctx.request.params;
+        if (!id) {
+            return ctx.error(resConfig.Parameter_Error, 'user_id is undefined');
+        }
+        const user = await UserModel.findOneInfo({
+            _id: id
+        });
+        if (!user) {
+            return ctx.error(resConfig.NO_Exist, '该用户不存在');
+        }
+        ctx.success(user);
+    }
+
+    static async getUserList (ctx) {
+        const query = ctx.request.query;
+        const limit = Number(query.limit) || 10;
+        const offset = Number(query.offset) || 0;
+        const result = {
+            total: 0,
+            list: []
+        };
+        const $cont = {};
+
+        if (query.valid) {
+            $cont.valid = query.valid;
+        }
+
+        result.list = await UserModel.getUserList($cont, { create_time: -1 }, {
+            limit,
+            offset
+        });
+        result.total = await UserModel.find($cont).count();
+        ctx.success(result);
+    }
+
+    static async updateUserById (ctx) {
+        const {
+            params,
+            body
+        } = ctx.request;
+        if (!params.user_id) {
+            return ctx.error(resConfig.Parameter_Error, 'user_id is undefined');
+        }
+        const $cont = {
+            _id: params.user_id
+        };
+        const user = await UserModel.findOneInfo($cont);
+        if (!user) {
+            return ctx.error(resConfig.NO_Exist, '该用户不存在');
+        }
+        await UserModel.updateUser($cont, body);
+        ctx.success({}, '更新成功');
+    }
 }
 
 module.exports = UserController;

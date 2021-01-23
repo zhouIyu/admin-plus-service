@@ -24,7 +24,7 @@ class App {
     }
 
     init () {
-        db(config.get('db.uri'));
+        db.init(config.get('db.uri'));
         this.preMiddleware();
         loadRoutes(this.app);
     }
@@ -37,5 +37,6 @@ class App {
         });
     }
 }
+
 const app = new App(new Koa());
 app.start();

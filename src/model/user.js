@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const { _id2Id } = require('../utils/response');
+const {
+    getList,
+    updateOne,
+    findOne
+} = require('../utils/db');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
@@ -10,6 +14,11 @@ const schema = new Schema({
     password: {
         type: String,
         required: [true, 'password 不能为空']
+    },
+    role_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        required: [true, 'role 不能为空']
     },
     valid: {
         type: Number,
@@ -30,21 +39,22 @@ schema.statics.findOneInfo = function (condition) {
     const model = this;
     const views = {
         __v: 0,
-        password: 0,
-        valid: 0
+        password: 0
     };
-    return new Promise((resolve, reject) => {
-        model.findOne(condition, views).lean().exec(function (err, doc) {
-            if (err) {
-                reject(err);
-            } else {
-                if (!doc) {
-                    return resolve(false);
-                }
-                resolve(_id2Id(doc));
-            }
-        });
-    });
+    return findOne(model, condition, views);
+};
+
+schema.statics.getUserList = function (condition, sort, body) {
+    const model = this;
+    const views = {
+        password: 0
+    };
+    return getList(model, condition, body, sort, views);
+};
+
+schema.statics.updateUser = function (condition, body) {
+    const model = this;
+    return updateOne(model, condition, body);
 };
 
 const model = mongoose.model('user', schema);

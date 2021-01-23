@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const { _id2IdByList } = require('../utils/response');
+const {
+    getList,
+    updateOne,
+    findOne
+} = require('../utils/db');
 
 const Schema = mongoose.Schema;
 
@@ -27,35 +31,19 @@ const schema = new Schema({
     }
 });
 
+schema.statics.findOneInfo = function (condition) {
+    const model = this;
+    return findOne(model, condition);
+};
+
 schema.statics.getRoleList = function (condition, sort, body) {
     const model = this;
-    const views = {
-        valid: 0,
-        __v: 0
-    };
-    return new Promise((resolve, reject) => {
-        model.find(condition, views).sort(sort).limit(body.limit).skip(body.offset).lean().exec(function (err, docs) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(_id2IdByList(docs));
-            }
-        });
-    });
+    return getList(model, condition, body, sort);
 };
 
 schema.statics.updateRole = function (condition, body) {
     const model = this;
-    body.update_time = Date.now();
-    return new Promise((resolve, reject) => {
-        model.update(condition, body).exec(function (err, doc) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(true);
-            }
-        });
-    });
+    return updateOne(model, condition, body);
 };
 
 const model = mongoose.model('role', schema);

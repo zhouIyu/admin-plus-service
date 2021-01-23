@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { list } = require('./common');
 
 const user = {
     username: Joi.string().required().error(new Error('username不能为空')),
@@ -6,6 +7,7 @@ const user = {
 };
 
 const register = {
+    role_id: Joi.string().required().error(new Error('role_id不能为空')),
     ...user
 };
 
@@ -13,7 +15,12 @@ const login = {
     ...user
 };
 
+const userList = {
+    ...list
+};
+
 module.exports = {
     register,
-    login
+    login,
+    list: userList
 };

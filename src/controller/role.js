@@ -22,9 +22,10 @@ class RoleController {
             total: 0,
             list: []
         };
-        const $cont = {
-            valid: 1
-        };
+        const $cont = {};
+        if (query.valid) {
+            $cont.valid = query.valid;
+        }
         result.list = await RoleModel.getRoleList($cont, { create_time: -1 }, {
             limit,
             offset
@@ -38,9 +39,12 @@ class RoleController {
         if (!id) {
             return ctx.error(resConfig.Parameter_Error, 'role_id is undefined');
         }
-        const hasRole = await RoleModel.findOne({ _id: id });
+        const hasRole = await RoleModel.findOneInfo({
+            _id: id,
+            valid: 1
+        });
         if (!hasRole) {
-            return ctx.error(resConfig.NO_Exist, '不存在该角色');
+            return ctx.error(resConfig.NO_Exist, '该角色不存在');
         }
         await RoleModel.updateRole({ _id: id }, { valid: 0 });
         ctx.success({}, '删除成功');
