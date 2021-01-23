@@ -2,9 +2,17 @@ POST {{url}}/user/login
 Content-Type: application/json
 
 {
-    "username": "zhouzhuang",
+    "username": "admin",
     "password": "123456"
 }
 
 ###
+
+POST {{url}}/user/create
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123456"
+}
 

@@ -1,0 +1,20 @@
+DELETE {{url}}/role/600b99b27ecd7c546ac957ec/remove
+Accept: application/json
+Authorization: {{token}}
+
+###
+GET {{url}}/role/list?limit=10&offset=0
+Accept: application/json
+Authorization: {{token}}
+
+###
+POST {{url}}/role/create
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "test",
+    "description": "测试者"
+}
+
+###

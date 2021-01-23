@@ -8,7 +8,7 @@ module.exports = {
         secret: 'KC31zpryumnfL4hSNtxIAPPz0IpBSPIY',
         expiresIn: '2h',
         whiteList: [
-            '/user/register',
+            '/user/create',
             '/user/login'
         ]
     }

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { _id2Id } = require('../utils/response');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
@@ -9,10 +10,6 @@ const schema = new Schema({
     password: {
         type: String,
         required: [true, 'password 不能为空']
-    },
-    email: {
-        type: String,
-        required: [true, 'email 不能为空']
     },
     valid: {
         type: Number,
@@ -28,6 +25,27 @@ const schema = new Schema({
         default: Date.now()
     }
 });
+
+schema.statics.findOneInfo = function (condition) {
+    const model = this;
+    const views = {
+        __v: 0,
+        password: 0,
+        valid: 0
+    };
+    return new Promise((resolve, reject) => {
+        model.findOne(condition, views).lean().exec(function (err, doc) {
+            if (err) {
+                reject(err);
+            } else {
+                if (!doc) {
+                    return resolve(false);
+                }
+                resolve(_id2Id(doc));
+            }
+        });
+    });
+};
 
 const model = mongoose.model('user', schema);
 

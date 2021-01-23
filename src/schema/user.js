@@ -5,14 +5,13 @@ const user = {
     password: Joi.string().pattern(/^[a-zA-Z0-9]{3,30}$/).required().error(new Error('password 不能为空'))
 };
 
-const register = Joi.object({
-    email: Joi.string().email().required().error(new Error('email 不能为空')),
+const register = {
     ...user
-});
+};
 
-const login = Joi.object({
+const login = {
     ...user
-});
+};
 
 module.exports = {
     register,

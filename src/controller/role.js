@@ -16,20 +16,34 @@ class RoleController {
 
     static async getRoleList (ctx) {
         const query = ctx.request.query;
-        const limit = query.limit || 10;
-        const offset = query.offset || 0;
+        const limit = Number(query.limit) || 10;
+        const offset = Number(query.offset) || 0;
         const result = {
             total: 0,
             list: []
         };
-        result.list = await RoleModel.find().limit(limit).skip(offset).sort({ create_time: -1 }).toArray();
-        result.total = await RoleModel.find().count();
+        const $cont = {
+            valid: 1
+        };
+        result.list = await RoleModel.getRoleList($cont, { create_time: -1 }, {
+            limit,
+            offset
+        });
+        result.total = await RoleModel.find($cont).count();
         ctx.success(result);
     }
 
     static async removeRole (ctx) {
-        const { id } = ctx.request.params;
-        console.log(id);
+        const { role_id: id } = ctx.request.params;
+        if (!id) {
+            return ctx.error(resConfig.Parameter_Error, 'role_id is undefined');
+        }
+        const hasRole = await RoleModel.findOne({ _id: id });
+        if (!hasRole) {
+            return ctx.error(resConfig.NO_Exist, '不存在该角色');
+        }
+        await RoleModel.updateRole({ _id: id }, { valid: 0 });
+        ctx.success({}, '删除成功');
     }
 }
 

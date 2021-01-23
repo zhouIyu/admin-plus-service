@@ -1,6 +1,7 @@
 const { resConfig } = require('../utils/response');
+const Joi = require('joi');
 
-module.exports = function (schema) {
+module.exports = function (json) {
     return async (ctx, next) => {
         try {
             let body = {};
@@ -9,6 +10,7 @@ module.exports = function (schema) {
             } else {
                 body = ctx.request.body;
             }
+            const schema = Joi.object(json);
             await schema.validateAsync(body);
             await next();
         } catch (error) {

@@ -38,7 +38,7 @@ class Log {
     static formatLog (req, time) {
         const method = req.method;
         const log = [`\n ${method} ${req.originalUrl}`, `request client ip: ${req.ip}`];
-        console.log(req.originalUrl);
+        console.log(`\n ${method} ${req.originalUrl}`);
         if (method === 'GET') { // 请求参数
             log.push(`request query: ${JSON.stringify(req.query)}\n`);
         } else {

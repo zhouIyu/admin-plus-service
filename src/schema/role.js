@@ -1,7 +1,8 @@
 const Joi = require('joi');
 
 const create = {
-    name: Joi.string().required().error(new Error('角色name不能为空'))
+    name: Joi.string().required().error(new Error('角色name不能为空')),
+    description: Joi.string().required().error(new Error('角色描述不能为空'))
 };
 
 const list = {

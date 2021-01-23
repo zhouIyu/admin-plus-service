@@ -3,7 +3,6 @@ const { resConfig } = require('../utils/response');
 
 module.exports = function auth () {
     return async (ctx, next) => {
-        console.log(ctx.request.url);
         if (JWT.isWhite(ctx.request.url)) {
             await next();
         } else {
