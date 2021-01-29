@@ -11,6 +11,7 @@ router.prefix('/role');
 
 router.get('/list', validator(list), Role.getRoleList);
 router.post('/create', validator(create), Role.createRole);
-router.delete('/:role_id/remove', Role.removeRole);
+router.put('/update/:role_id', Role.updateRoleById);
+router.delete('/remove/:role_id', Role.removeRole);
 
 module.exports = router;

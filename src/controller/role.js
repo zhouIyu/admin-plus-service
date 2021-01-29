@@ -1,6 +1,19 @@
 const RoleModel = require('../model/role');
 const { resConfig } = require('../utils/response');
 
+const validateExitRole = async (ctx, id) => {
+    if (!id) {
+        return ctx.error(resConfig.Parameter_Error, 'role_id is undefined');
+    }
+    const user = await RoleModel.findOneInfo({
+        _id: id
+    });
+    if (!user) {
+        return ctx.error(resConfig.NO_Exist, '该角色不存在');
+    }
+    return user;
+};
+
 class RoleController {
     static async createRole (ctx) {
         const body = ctx.request.body;
@@ -36,18 +49,17 @@ class RoleController {
 
     static async removeRole (ctx) {
         const { role_id: id } = ctx.request.params;
-        if (!id) {
-            return ctx.error(resConfig.Parameter_Error, 'role_id is undefined');
-        }
-        const hasRole = await RoleModel.findOneInfo({
-            _id: id,
-            valid: 1
-        });
-        if (!hasRole) {
-            return ctx.error(resConfig.NO_Exist, '该角色不存在');
-        }
+        await validateExitRole(ctx, id);
         await RoleModel.updateRole({ _id: id }, { valid: 0 });
         ctx.success({}, '删除成功');
+    }
+
+    static async updateRoleById (ctx) {
+        const { role_id: id } = ctx.request.params;
+        const body = ctx.request.body;
+        await validateExitRole(ctx, id);
+        await RoleModel.updateRole({ _id: id }, body);
+        ctx.success({}, '更新成功');
     }
 }
 
