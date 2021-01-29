@@ -1,5 +1,8 @@
 const Log = require('../utils/log');
-const { Response, resConfig } = require('../utils/response');
+const {
+    Response,
+    resConfig
+} = require('../utils/response');
 
 module.exports = function errorHandle () {
     return async (ctx, next) => {
@@ -15,6 +18,9 @@ module.exports = function errorHandle () {
         try {
             await next(); // 下一个中间件
             ms = new Date() - start;
+            if (ctx.response.status === 404) {
+                throw new Error('API 不存在');
+            }
             Log.response(ctx, `${ms}ms`); // 记录响应日志
         } catch (error) {
             ms = new Date() - start;
